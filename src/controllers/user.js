@@ -76,7 +76,6 @@ const updateUser = async (req, res) => {
         res.status(error.code || 500).json({ message: error.message });
     }
 }
-
 module.exports = {
     registerUser,
     loginUser,
