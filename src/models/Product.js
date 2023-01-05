@@ -24,7 +24,8 @@ const ProductSchema = new Schema({
     ],
 
     size: {
-        type: String
+        type: String,
+        default: "medium"
     },
 
     image: {

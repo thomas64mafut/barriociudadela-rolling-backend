@@ -32,9 +32,20 @@ const editProduct = async(req,res) => {
     }
 }
 
+const deleteProduct =  async(req,res) => {
+    try {
+        const {id} = req.query;
+        await Product.deleteOne({_id : id});
+        res.status(200).json({message: 'Product deleted correctly'})
+    } catch (error) {
+        res.status(error.code || 500).json({message : error.message})
+    }
+}
+
 
 module.exports= {
     addProduct,
     getProducts,
-    editProduct
+    editProduct,
+    deleteProduct
 }
