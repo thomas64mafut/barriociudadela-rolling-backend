@@ -1,4 +1,4 @@
-const {model , Schema} = require('mongoose');
+const {model , Schema, mongo, default: mongoose} = require('mongoose');
 
 const ProductSchema = new Schema({
     name: {
@@ -11,9 +11,10 @@ const ProductSchema = new Schema({
         type: Number
     },
     
-    ingredients: [
+    ingredients: [ 
             {
-                type: String
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Ingredient'
             },
     ],
     
@@ -37,12 +38,15 @@ const ProductSchema = new Schema({
     },
 
     isDeleted: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
 
     details: {
         type: String
     }
+},{
+    versionKey: false
 })
 
 const Product = model('Product', ProductSchema);

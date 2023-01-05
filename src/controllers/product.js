@@ -14,7 +14,7 @@ const addProduct = async(req, res) => {
 
 const getProducts = async(req,res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find().populate('ingredients');
         res.status(200).json({message: 'products obtained correctly', products})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
