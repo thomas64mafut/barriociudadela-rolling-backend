@@ -1,4 +1,4 @@
-const {model , Schema, mongo, default: mongoose} = require('mongoose');
+const { model, Schema } = require('mongoose');
 
 const ProductSchema = new Schema({
     name: {
@@ -7,48 +7,29 @@ const ProductSchema = new Schema({
     brand: {
         type: String
     },
+    detail: {
+        type: String
+    },
     price: {
         type: Number
     },
-    
-    ingredients: [ 
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Ingredient'
-            },
-    ],
-    
-    toppings: [
-        {
-            type: String   
-        }
-    ],
-
-    size: {
-        type: String,
-        default: "medium"
-    },
-
     image: {
         type: String
     },
-
     category: {
         type: String
     },
-
     isDeleted: {
         type: Boolean,
         default: false
     },
-
-    details: {
-        type: String
-    }
 },{
     versionKey: false
 })
 
 const Product = model('Product', ProductSchema);
 
-module.exports= Product;
+module.exports = {
+    Product,
+    ProductSchema,
+};
