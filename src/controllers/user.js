@@ -16,9 +16,7 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
         const userFound = await User.findOne({ email, isDeleted: false })
 
-        if (!userFound) return res.status(400).json({ message: 'usuario no encontrado, por favor registrese' });
-
-        if (password !== userFound.password) return res.status(400).json({ message: 'contraseña incorrecta' });
+        if (!userFound || password !== userFound.password) return res.status(400).json({ message: 'Incorrect user credentials' });
 
         res.status(200).json({ message: 'usuario autenticado exitosamente' })
     } catch (error) {
@@ -45,8 +43,8 @@ const getAllUsers = async (req, res) => {
         const skip = (page - 1) * limit;
         if (page > pagesCount) return res.status(400).json({ message: 'pagina no encontrada'});
         if (!paginated) {
-        const usersFound  = await User.find( { isDeleted: false }).select('-password -_id -deleted');
-        return res.status(200).json({ message: 'usuarios extraidos de forma exitosa', users: usersFound })
+            const usersFound  = await User.find( { isDeleted: false }).select('-password -_id -deleted');
+            return res.status(200).json({ message: 'usuarios extraidos de forma exitosa', users: usersFound })
         }
 
         const usersFound  = await User.find( { isDeleted: false }).skip(skip).limit(limit).select('-password -_id -deleted');
@@ -76,6 +74,7 @@ const updateUser = async (req, res) => {
         res.status(error.code || 500).json({ message: error.message });
     }
 }
+
 module.exports = {
     registerUser,
     loginUser,

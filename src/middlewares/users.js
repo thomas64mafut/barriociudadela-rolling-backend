@@ -9,7 +9,7 @@ const verifyRegisterFields = () => {
             })
         }),
         body('password').isLength({ min: 6, max: 16 }),
-        body('name').not().isEmpty().trim().escape(),
+        body('username').not().isEmpty().trim().escape().isLength({ min: 4, max: 24 }),
     ];
 };
 

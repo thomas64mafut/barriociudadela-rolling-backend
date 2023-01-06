@@ -1,7 +1,7 @@
 const { model, Schema, default: mongoose } = require('mongoose');
 
 const UserSchema = new Schema ({
-    name: {
+    username: {
         type: String,
     },
     email: {
@@ -16,6 +16,7 @@ const UserSchema = new Schema ({
     },
     profilePicture: {
         type: String,
+        default: 'empty'
     },
     isDeleted: {
         type: Boolean,
@@ -23,7 +24,8 @@ const UserSchema = new Schema ({
     },
     role: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Role'
+        ref: 'Role',
+        default: '63b750d9df706678b4bf105c',
     },
 }, {
     versionKey: false
