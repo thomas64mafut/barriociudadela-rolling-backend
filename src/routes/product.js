@@ -11,9 +11,4 @@ router.post('/drink', addDrink)
 router.post('/snack', addSnack)
 router.post('/sandwich', addSandwich)
 
-router.get('/', getProducts)
-router.put('/:id', editProduct)
-router.delete('/', deleteProduct)
-
-
 module.exports= router

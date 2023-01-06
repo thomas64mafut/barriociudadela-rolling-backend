@@ -1,4 +1,4 @@
-const { model } = require('mongoose');
+const { model, default: mongoose} = require('mongoose');
 const extendSchema = require('mongoose-extend-schema');
 const { ProductSchema } = require('./Product');
 
