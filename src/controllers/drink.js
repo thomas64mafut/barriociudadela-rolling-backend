@@ -42,7 +42,7 @@ const deleteDrink =  async (req,res) => {
 
 module.exports = {
     addDrink,
-    getDrink,
+    getDrinks,
     editDrink,
     deleteDrink
 }

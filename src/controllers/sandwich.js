@@ -10,7 +10,7 @@ const addSandwich = async (req, res) => {
     }
 }
 
-const getSandwichss = async (req,res) => {
+const getSandwiches = async (req,res) => {
     try {
         const Sandwichs = await sSndwich.find().populate('ingredients');
         res.status(200).json({message: 'Sandwichs obtained correctly', Sandwichs})
@@ -42,7 +42,7 @@ const deleteSandwich =  async (req,res) => {
 
 module.exports = {
     addSandwich,
-    getSandwich,
+    getSandwiches,
     editSandwich,
     deleteSandwich
 }

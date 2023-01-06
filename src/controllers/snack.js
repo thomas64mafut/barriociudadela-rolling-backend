@@ -42,7 +42,7 @@ const deleteSnack =  async (req,res) => {
 
 module.exports = {
     addSnack,
-    getSnack,
+    getSnacks,
     editSnack,
     deleteSnack
 }
