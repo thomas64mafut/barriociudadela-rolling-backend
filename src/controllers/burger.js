@@ -13,7 +13,7 @@ const addBurger = async (req, res) => {
 const getBurgers = async (req,res) => {
     try {
         const burgers = await Burger.find().populate('ingredients');
-        res.status(200).json({message: 'Burgers obtained correctly', Burgers})
+        res.status(200).json({message: 'Burgers obtained correctly', burgers})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
     }

@@ -12,7 +12,7 @@ const addSnack = async (req, res) => {
 
 const getSnacks = async (req,res) => {
     try {
-        const Snacks = await sSndwich.find().populate('ingredients');
+        const Snacks = await Snack.find();
         res.status(200).json({message: 'Snacks obtained correctly', Snacks})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

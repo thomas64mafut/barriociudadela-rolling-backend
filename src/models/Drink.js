@@ -9,6 +9,7 @@ const DrinkSchema = extendSchema(ProductSchema,{
     },
     size: {
         type: String,
+        defaul: 'medium'
     },
 },{
     versionKey: false

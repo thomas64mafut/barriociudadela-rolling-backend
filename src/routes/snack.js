@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { addSnack } = require('../models/Snack')
+const { addSnack, getSnacks } = require('../controllers/snack')
 
-router.post('/snack', addSnack)
+router.post('/', addSnack)
+router.get('/', getSnacks)
 
 module.exports= router
