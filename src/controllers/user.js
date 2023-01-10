@@ -43,11 +43,11 @@ const getAllUsers = async (req, res) => {
         const skip = (page - 1) * limit;
         if (page > pagesCount) return res.status(400).json({ message: 'pagina no encontrada'});
         if (!paginated) {
-            const usersFound  = await User.find( { isDeleted: false }).select('-password -_id -deleted');
+            const usersFound  = await User.find( { isDeleted: false }).select('-password -_id -deleted').populate('role');
             return res.status(200).json({ message: 'usuarios extraidos de forma exitosa', users: usersFound })
         }
 
-        const usersFound  = await User.find( { isDeleted: false }).skip(skip).limit(limit).select('-password -_id -deleted');
+        const usersFound  = await User.find( { isDeleted: false }).skip(skip).limit(limit).select('-password -_id -deleted').populate('role');
         return res.status(200).json({ message: 'usuarios extraidos de forma exitosa',usersCount, pagesCount, currentPage: page, users: usersFound })
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
