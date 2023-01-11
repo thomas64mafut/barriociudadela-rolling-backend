@@ -1,10 +1,8 @@
-const { Schema, default: mongoose } = require("mongoose");
-
+const { Schema, default: mongoose, model } = require("mongoose");
 
 const CartSchema = new Schema ({
     owner: {
-        type: mongoose.Schema.types.ObjetId,
-        ref: 'User'
+        type: String
     },
     products: [
         {
@@ -15,20 +13,21 @@ const CartSchema = new Schema ({
                 type: Number
             },
             quantity: {
-                type: Number
+                type: Number,
+                default: 1
             },
             preferences: {
                 type: String
             },
             removed: [
                 {
-                    type: mongoose.Schema.types.ObjetId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: 'Ingredient'
                 }
             ],
             toppings: [
                 {
-                    type: mongoose.Schema.types.ObjetId,
+                    type: mongoose.Schema.Types.ObjectId,
                     ref: 'Ingredient'
                 }
             ],
