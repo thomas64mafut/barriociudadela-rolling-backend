@@ -4,7 +4,7 @@ const { Snack } = require('../models/Snack');
 
 const getAllProducts = async (req, res) => {
     try {
-        const burgers = await Burger.find();
+        const burgers = await Burger.find().populate('ingredients');
         const snacks = await Snack.find();
         const drinks = await Drink.find();
 
