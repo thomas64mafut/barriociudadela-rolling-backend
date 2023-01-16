@@ -7,6 +7,7 @@ const {
     deleteUser, 
     updateUser, 
 } = require('../controllers/user.js');
+
 const { validate } = require('../helpers/validate.js');
 const { verifyRegisterFields, verifyLoginFields } = require('../middlewares/users.js');
 const router = express.Router();
