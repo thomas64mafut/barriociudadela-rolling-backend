@@ -10,6 +10,7 @@ const addRole = async (req, res) => {
         res.status(error.code || 500).json({ message: error.message });
     }
 }
+
 const getAllRoles = async (req, res) => {
     try {
         const rolesFound  = await Role.find( { isDeleted: false });
@@ -23,4 +24,5 @@ const getAllRoles = async (req, res) => {
 module.exports = {
     addRole,
     getAllRoles,
+
 }
