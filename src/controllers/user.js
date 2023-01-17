@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userFound = await User.findOne({ email, isDeleted: false });
+        const userFound = await User.findOne({ email, isDeleted: false }).populate('role');
         if (!userFound) return res.status(400).json({ message: 'Incorrect user credentials.' });
 
         const loginSucceed = await bcryptjs.compare(password, userFound?.password);
@@ -34,7 +34,6 @@ const loginUser = async (req, res) => {
                 role: userFound.role,
             },
         };
-        console.log(payload);
         jwt.sign(payload, process.env.SECRET_WORD, { expiresIn: '8h' }, (error,token) =>{
             if(error) {
                 throw error;
@@ -96,7 +95,6 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { id } = req.params;
         const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, { new: true });
         res.status(200).json({ message: "User's data successfully edited.", user: updatedUser });
     } catch (error) {
