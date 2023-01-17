@@ -1,28 +1,50 @@
 const User = require('../models/User');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const registerUser = async (req, res) => {
     try {
-        const userToRegister = req.body; 
+        const salt = await bcryptjs.genSalt(10);
+        const encryptedPassword = await bcryptjs.hash(req.body.password, salt)
+        const userToRegister = {
+            ...req.body,
+            password: encryptedPassword,
+        }
         const newUser = new User(userToRegister);
         await newUser.save();
-        res.status(200).json({ message: 'usuario creado exitosamente', newUser })
+        res.status(200).json({ message: 'User successfully created.' })
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
     }
-}
+};
 
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userFound = await User.findOne({ email, isDeleted: false })
+        const userFound = await User.findOne({ email, isDeleted: false });
+        if (!userFound) return res.status(400).json({ message: 'Incorrect user credentials.' });
 
-        if (!userFound || password !== userFound.password) return res.status(400).json({ message: 'Incorrect user credentials' });
+        const loginSucceed = await bcryptjs.compare(password, userFound?.password);
+        if(!loginSucceed) return res.status(400).json({ message: 'Incorrect user credentials.'});
 
-        res.status(200).json({ message: 'usuario autenticado exitosamente' })
+        const payload = {
+            user: {
+                id: userFound._id,
+                role: userFound.role,
+            },
+        };
+        console.log(payload);
+        jwt.sign(payload, process.env.SECRET_WORD, { expiresIn: '8h' }, (error,token) =>{
+            if(error) {
+                throw error;
+            }
+            res.status(200).json({ message: 'User successfully logged in.', token });
+        })
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
     }
-}
+};
 
 const getUser = async (req, res) => {
     try {
@@ -33,7 +55,7 @@ const getUser = async (req, res) => {
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
     }
-}
+};
 
 const getAllUsers = async (req, res) => {
     try {
@@ -50,32 +72,37 @@ const getAllUsers = async (req, res) => {
 
         const usersFound  = await User.find( { isDeleted: false }).skip(skip).limit(limit).select('-password  -deleted').populate('role');
         if (usersFound.length === 0) return res.status(400).json({ message: 'lista de usuarios vacia' });
-        return res.status(200).json({ message: 'usuarios extraidos de forma exitosa',usersCount, pagesCount, currentPage: page, users: usersFound })
+        return res.status(200).json({ message: 'usuarios extraidos de forma exitosa',
+            usersCount,
+            pagesCount,
+            currentPage: page,
+            users: usersFound
+        });
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
     }
-}
+};
 
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const userToDelete = await User.findByIdAndUpdate(id, { isDeleted: true }, { new: true }).select('-password -_id -role -createdAt -profilePicture');
         if (!userToDelete) return res.status(400).json({ message: 'usuario no encontrado' });
-        res.status(200).json({ message: 'usuario eliminado exitosamente', userToDelete });
+        res.status(200).json({ message: 'User successfully deleted.', userToDelete });
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
     }
-}
+};
 
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
-        res.status(200).json({ message: 'usuario editado correctamente', updatedUser })
+        const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, { new: true });
+        res.status(200).json({ message: "User's data successfully edited.", user: updatedUser });
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message });
     }
-}
+};
 
 module.exports = {
     registerUser,

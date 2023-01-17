@@ -9,14 +9,16 @@ const {
 } = require('../controllers/user.js');
 const { validate } = require('../helpers/validate.js');
 const { verifyRegisterFields, verifyLoginFields } = require('../middlewares/users.js');
+const { decodeToken, verifyJwt, adminRequiredValidation } = require('../middlewares/auth');
 const router = express.Router();
+
 
 router.post('/register', verifyRegisterFields(), validate, registerUser);
 router.post('/login', verifyLoginFields(), validate, loginUser);
-router.patch('/:id', updateUser); // editar metodo => recibir token 
+router.patch('/:id', decodeToken, updateUser); 
 
-router.get('/:id', getUser);
-router.get('/', getAllUsers);
-router.patch('/delete/:id', deleteUser);
+router.get('/:id', decodeToken, getUser);
+router.get('/', adminRequiredValidation, getAllUsers);
+router.patch('/delete/:id', verifyJwt, deleteUser);
 
 module.exports = router; 
