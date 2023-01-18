@@ -7,7 +7,8 @@ const {
     getUser, 
     getAllUsers, 
     deleteUser, 
-    updateUser, 
+    updateUser,
+    loginStatus, 
 } = require('../controllers/user.js');
 
 const { validate } = require('../helpers/validate.js');
@@ -18,8 +19,10 @@ router.post('/register', verifyRegisterFields(), validate, registerUser);
 router.post('/login', verifyLoginFields(), validate, loginUser);
 router.patch('/', decodeToken, updateUser); 
 
+router.get('/status', decodeToken, loginStatus);
 router.get('/:id', decodeToken, adminRequiredValidation, getUser);
 router.get('/', decodeToken, adminRequiredValidation, getAllUsers);
 router.patch('/delete/:id', decodeToken, adminRequiredValidation, deleteUser);
+
 
 module.exports = router; 
