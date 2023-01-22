@@ -16,7 +16,6 @@ const verifyRegisterFields = () => {
 const verifyLoginFields = () => {
     return [
         body('email').isEmail().normalizeEmail().trim().escape(),
-        body('password').isLength({ min: 6, max: 16 }),
     ];
 }
 

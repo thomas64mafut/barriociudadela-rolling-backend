@@ -26,7 +26,7 @@ const loginUser = async (req, res) => {
         if (!userFound) return res.status(400).json({ message: 'Incorrect user credentials.' });
 
         const loginSucceed = await bcryptjs.compare(password, userFound?.password);
-        if(!loginSucceed) return res.status(400).json({ message: 'Incorrect user credentials.'});
+        if (!loginSucceed) return res.status(400).json({ message: 'Incorrect user credentials.' });
 
         const payload = {
             user: {
@@ -34,8 +34,8 @@ const loginUser = async (req, res) => {
                 role: userFound.role,
             },
         };
-        jwt.sign(payload, process.env.SECRET_WORD, { expiresIn: '8h' }, (error,token) =>{
-            if(error) {
+        jwt.sign(payload, process.env.SECRET_WORD, { expiresIn: '8h' }, (error, token) => {
+            if (error) {
                 throw error;
             }
             res.status(200).json({ message: 'User successfully logged in.', token });
@@ -62,16 +62,17 @@ const getAllUsers = async (req, res) => {
         const usersCount = await User.count();
         const pagesCount = Math.ceil(usersCount / limit);
         const skip = (page - 1) * limit;
-        if (page > pagesCount) return res.status(400).json({ message: 'pagina no encontrada'});
+        if (page > pagesCount) return res.status(400).json({ message: 'pagina no encontrada' });
         if (!paginated) {
-            const usersFound  = await User.find( { isDeleted: false }).select('-password -deleted').populate('role');
+            const usersFound = await User.find({ isDeleted: false }).select('-password -deleted').populate('role');
             if (usersFound.length === 0) return res.status(400).json({ message: 'lista de usuarios vacia' });
             return res.status(200).json({ message: 'usuarios extraidos de forma exitosa', users: usersFound })
         }
 
-        const usersFound  = await User.find( { isDeleted: false }).skip(skip).limit(limit).select('-password  -deleted').populate('role');
+        const usersFound = await User.find({ isDeleted: false }).skip(skip).limit(limit).select('-password  -deleted').populate('role');
         if (usersFound.length === 0) return res.status(400).json({ message: 'lista de usuarios vacia' });
-        return res.status(200).json({ message: 'usuarios extraidos de forma exitosa',
+        return res.status(200).json({
+            message: 'usuarios extraidos de forma exitosa',
             usersCount,
             pagesCount,
             currentPage: page,
@@ -102,6 +103,14 @@ const updateUser = async (req, res) => {
     }
 };
 
+const loginStatus = (req, res) => {
+    try {
+        return res.status(200).json({ message: 'user is still logged', isLogged: true, role: req.userRole.name })
+    } catch (error) {
+        return res.status(error.code || 500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
@@ -109,4 +118,5 @@ module.exports = {
     getAllUsers,
     deleteUser,
     updateUser,
+    loginStatus,
 }
