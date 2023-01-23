@@ -4,13 +4,13 @@ const Cart = require("../models/Cart");
 const createCart = async(req,res) => {
     try {
         const {name, quantity, price, removed, toppings, size} = req.body
-        const cartFound = await Cart.findOne({owner: '63bf51f9763505509f9f8921' })
+        const cartFound = await Cart.findOne({ owner: req.userId })
         if(!cartFound){
             const payload = {
                 products: [
                     req.body,
                 ],
-                owner: '63bf51f9763505509f9f8921'
+                owner: req.userId, 
             }
             const cart = new Cart(payload);
             await cart.save();
@@ -43,7 +43,7 @@ const createCart = async(req,res) => {
 
 const getCart = async (req, res) => {
     try {
-        const ownCart = await Cart.findOne({owner: '63bf51f9763505509f9f8921' }).populate('products.removed').populate('products.toppings')
+        const ownCart = await Cart.findOne({owner: req.userId }).populate('products.removed').populate('products.toppings')
         res.status(200).json({message: 'Cart obtained correctly', ownCart})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
