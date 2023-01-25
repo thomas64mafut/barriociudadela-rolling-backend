@@ -4,7 +4,7 @@ const Cart = require("../models/Cart");
 const createCart = async(req,res) => {
     try {
         const {name, quantity, price, removed, toppings, size} = req.body
-        const cartFound = await Cart.findOne({ owner: req.userId })
+        const cartFound = await Cart.findOne({ owner: req.userId, cartStatus : 'active' })
         if(!cartFound){
             const payload = {
                 products: [
@@ -43,16 +43,36 @@ const createCart = async(req,res) => {
 
 const getCart = async (req, res) => {
     try {
-        const ownCart = await Cart.findOne({owner: req.userId }).populate('products.removed').populate('products.toppings')
+        const ownCart = await Cart.findOne({owner: req.userId, cartStatus : 'active' }).populate('products.removed').populate('products.toppings')
         res.status(200).json({message: 'Cart obtained correctly', ownCart})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
-        
     }
 };
 
+const deleteCart = async(req , res) =>{
+    try {
+        const {id} = req.params;
+        const updatedCart = await Cart.findByIdAndUpdate(id, {cartStatus: 'deleted'}, {new: true})
+        res.status(200).json({message: 'Cart deleted correctly', updatedCart})
+    } catch (error) {
+        res.status(error.code || 500).json({message : error.message})
+    }
+}
+
+const buyCart = async(req , res) =>{
+    try {
+        const {id} = req.params;
+        const updatedCart = await Cart.findByIdAndUpdate(id, {cartStatus: 'sold'}, {new: true})
+        res.status(200).json({message: 'Cart sold correctly', updatedCart})
+    } catch (error) {
+        res.status(error.code || 500).json({message : error.message})
+    }
+}
 
 module.exports = {
     createCart,
-    getCart
+    getCart,
+    deleteCart,
+    buyCart,
 }

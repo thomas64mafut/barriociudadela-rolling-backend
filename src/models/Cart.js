@@ -4,6 +4,10 @@ const CartSchema = new Schema ({
     owner: {
         type: String
     },
+    cartStatus: {
+        type: String,
+        default: 'active'
+    },
     products: [
         {
             idProduct: {
@@ -39,8 +43,7 @@ const CartSchema = new Schema ({
                 {
                     type: String,
                     default: 'medium'
-                }
-            ,
+                },
             _id: false
         }
     ]
