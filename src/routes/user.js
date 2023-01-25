@@ -20,8 +20,8 @@ router.post('/login', verifyLoginFields(), validate, loginUser);
 router.patch('/', decodeToken, updateUser); 
 
 router.get('/status', decodeToken, loginStatus);
-router.get('/:id', decodeToken, getUser);
-router.get('/', decodeToken, adminRequiredValidation, getAllUsers);
+router.get('/', decodeToken, getUser);
+router.get('/all', decodeToken, adminRequiredValidation, getAllUsers);
 router.patch('/delete/:id', decodeToken, adminRequiredValidation, deleteUser);
 
 
