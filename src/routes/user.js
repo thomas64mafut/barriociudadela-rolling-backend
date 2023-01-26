@@ -9,6 +9,7 @@ const {
     deleteUser, 
     updateUser,
     loginStatus, 
+    updateOwnUser,
 } = require('../controllers/user.js');
 
 const { validate } = require('../helpers/validate.js');
@@ -17,7 +18,8 @@ const { decodeToken, verifyJwt, adminRequiredValidation } = require('../middlewa
 
 router.post('/register', verifyRegisterFields(), validate, registerUser);
 router.post('/login', verifyLoginFields(), validate, loginUser);
-router.patch('/', decodeToken, updateUser); 
+router.patch('/', decodeToken, updateOwnUser); 
+router.patch('/:id', decodeToken, updateUser); 
 
 router.get('/status', decodeToken, loginStatus);
 router.get('/', decodeToken, getUser);
