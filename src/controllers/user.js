@@ -93,9 +93,19 @@ const deleteUser = async (req, res) => {
     }
 };
 
-const updateUser = async (req, res) => {
+const updateOwnUser = async (req, res) => {
     try {
         const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, { new: true });
+        res.status(200).json({ message: "User's data successfully edited.", user: updatedUser });
+    } catch (error) {
+        res.status(error.code || 500).json({ message: error.message });
+    }
+};
+
+const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
         res.status(200).json({ message: "User's data successfully edited.", user: updatedUser });
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message });
@@ -118,4 +128,5 @@ module.exports = {
     deleteUser,
     updateUser,
     loginStatus,
+    updateOwnUser,
 }
