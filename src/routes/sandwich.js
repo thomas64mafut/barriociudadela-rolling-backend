@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { addSandwich } = require('../controllers/sandwich');
 
-router.post('/sandwich', addSandwich)
+router.post('/', addSandwich)
 
 module.exports= router

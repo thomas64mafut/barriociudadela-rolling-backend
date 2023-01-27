@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose');
+const { model, Schema, default: mongoose } = require('mongoose');
 
 const ProductSchema = new Schema({
     name: {
@@ -17,13 +17,14 @@ const ProductSchema = new Schema({
         type: String
     },
     category: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
     },
     isDeleted: {
         type: Boolean,
         default: false
     },
-},{
+}, {
     versionKey: false
 })
 

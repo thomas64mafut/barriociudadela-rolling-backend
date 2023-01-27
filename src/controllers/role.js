@@ -24,5 +24,4 @@ const getAllRoles = async (req, res) => {
 module.exports = {
     addRole,
     getAllRoles,
-
 }
