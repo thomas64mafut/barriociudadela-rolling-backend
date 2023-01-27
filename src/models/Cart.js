@@ -2,7 +2,8 @@ const { Schema, default: mongoose, model } = require("mongoose");
 
 const CartSchema = new Schema ({
     owner: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     cartStatus: {
         type: String,

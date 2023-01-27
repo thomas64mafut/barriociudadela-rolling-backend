@@ -52,7 +52,7 @@ const getCart = async (req, res) => {
 
 const getAllCarts = async (req, res) => {
     try {
-        const allSoldCarts = await Cart.find({cartStatus : 'sold' }).populate('products.removed').populate('products.toppings')
+        const allSoldCarts = await Cart.find({cartStatus : 'sold' }).populate('owner').populate('products.removed').populate('products.toppings')
         res.status(200).json({message: 'Carts obtained correctly', allSoldCarts})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
