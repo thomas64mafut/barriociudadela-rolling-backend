@@ -50,6 +50,16 @@ const getCart = async (req, res) => {
     }
 };
 
+const getAllCarts = async (req, res) => {
+    try {
+        const allSoldCarts = await Cart.find({cartStatus : 'sold' }).populate('products.removed').populate('products.toppings')
+        res.status(200).json({message: 'Carts obtained correctly', allSoldCarts})
+    } catch (error) {
+        res.status(error.code || 500).json({message : error.message})
+    }
+};
+
+
 const deleteCart = async(req , res) =>{
     try {
         const {id} = req.params;
@@ -75,4 +85,5 @@ module.exports = {
     getCart,
     deleteCart,
     buyCart,
+    getAllCarts,
 }
