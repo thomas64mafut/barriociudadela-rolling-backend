@@ -10,6 +10,4 @@ router.use('/sandwich', require('./sandwich'))
 
 router.get('/', getAllProducts)
 
-
-
 module.exports= router

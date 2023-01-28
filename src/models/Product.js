@@ -1,10 +1,7 @@
-const { model, Schema } = require('mongoose');
+const { model, Schema, default: mongoose } = require('mongoose');
 
 const ProductSchema = new Schema({
     name: {
-        type: String
-    },
-    brand: {
         type: String
     },
     detail: {
@@ -17,13 +14,17 @@ const ProductSchema = new Schema({
         type: String
     },
     category: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+    },
+    size: {
+        type: String,
     },
     isDeleted: {
         type: Boolean,
         default: false
     },
-},{
+}, {
     versionKey: false
 })
 

@@ -32,8 +32,8 @@ const editBurger = async (req,res) => {
 
 const deleteBurger =  async (req,res) => {
     try {
-        const {id} = req.query;
-        await Burger.deleteOne({_id : id});
+        const { id } = req.params;
+        await Burger.findByIdAndUpdate({ _id : id }, { isDeleted: true });
         res.status(200).json({message: 'Burger deleted correctly'})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
