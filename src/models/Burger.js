@@ -13,10 +13,6 @@ const BurgerSchema = extendSchema(ProductSchema, {
         type: Boolean,
         default: false,
     },
-    size: {
-        type: String,
-        default: 'm'
-    }
 },{
     versionKey: false
 })

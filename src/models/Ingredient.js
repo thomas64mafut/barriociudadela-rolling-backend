@@ -7,11 +7,9 @@ const IngredientSchema = new Schema({
     price: {
         type: Number
     },
-    
     category: {
         type: String
     },
-
     isDeleted: {
         type: Boolean,
         default: false

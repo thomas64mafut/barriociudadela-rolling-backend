@@ -7,7 +7,7 @@ const getAllProducts = async (req, res) => {
     try {
         const burgers = await Burger.find( {isDeleted: false }).populate('ingredients category');
         const sandwiches = await Sandwich.find( {isDeleted: false }).populate('ingredients category');
-        const snacks = await Snack.find( {isDeleted: false }).populate('category');
+        const snacks = await Snack.find( {isDeleted: false }).populate('ingredients category');
         const drinks = await Drink.find( {isDeleted: false }).populate('category');
 
         const products = [].concat.apply([], [burgers, sandwiches, snacks, drinks]);

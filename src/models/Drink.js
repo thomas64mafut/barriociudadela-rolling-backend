@@ -3,13 +3,16 @@ const extendSchema = require('mongoose-extend-schema');
 const { ProductSchema }  = require('./Product');
 
 const DrinkSchema = extendSchema(ProductSchema,{
+    brand: {
+        type: String,
+    },
     hasAlcohol: {
         type: Boolean,
         default: false,
     },
     size: {
         type: String,
-        default: '1 lt'
+        default: '700ml'
     },
 },{
     versionKey: false

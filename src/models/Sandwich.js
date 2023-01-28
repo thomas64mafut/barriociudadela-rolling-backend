@@ -13,9 +13,6 @@ const SandwichSchema = extendSchema(ProductSchema,{
         type: Boolean,
         default: false,
     },
-    meatType: {
-        type: String,
-    }
 },{
     versionKey: false
 })

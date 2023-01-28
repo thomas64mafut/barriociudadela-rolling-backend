@@ -4,9 +4,6 @@ const ProductSchema = new Schema({
     name: {
         type: String
     },
-    brand: {
-        type: String
-    },
     detail: {
         type: String
     },
@@ -19,6 +16,9 @@ const ProductSchema = new Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
+    },
+    size: {
+        type: String,
     },
     isDeleted: {
         type: Boolean,
