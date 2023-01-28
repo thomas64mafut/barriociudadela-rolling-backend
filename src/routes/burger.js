@@ -6,6 +6,6 @@ const { addBurger, getBurgers, deleteBurger, editBurger } = require('../controll
 router.post('/', addBurger)
 router.get('/', getBurgers)
 router.put('/:id', editBurger)
-router.delete('/', deleteBurger)
+router.patch('/delete/:id', deleteBurger)
 
 module.exports= router

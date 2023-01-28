@@ -21,7 +21,7 @@ const getSandwiches = async (req,res) => {
 
 const editSandwich = async (req,res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const updatedSandwich = await Sandwich.findByIdAndUpdate(id, req.body, {new : true})
         res.status(200).json({message: 'properly edited Sandwich', updatedSandwich})
     } catch (error) {
@@ -32,8 +32,8 @@ const editSandwich = async (req,res) => {
 
 const deleteSandwich =  async (req,res) => {
     try {
-        const {id} = req.query;
-        await Sandwich.deleteOne({_id : id});
+        const { id } = req.params;
+        await Sandwich.findByIdAndUpdate({ _id : id }, { isDeleted: true });
         res.status(200).json({message: 'Sandwich deleted correctly'})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

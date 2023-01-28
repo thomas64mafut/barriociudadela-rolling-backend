@@ -32,8 +32,8 @@ const editDrink = async (req,res) => {
 
 const deleteDrink =  async (req,res) => {
     try {
-        const {id} = req.query;
-        await Drink.deleteOne({_id : id});
+        const {id} = req.params;
+        await Drink.findByIdAndUpdate({ _id : id }, { isDeleted: true });
         res.status(200).json({message: 'Drink deleted correctly'})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
