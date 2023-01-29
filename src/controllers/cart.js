@@ -73,7 +73,7 @@ const deleteCart = async(req , res) =>{
 const buyCart = async(req , res) =>{
     try {
         const {id} = req.params;
-        const updatedCart = await Cart.findByIdAndUpdate(id, {cartStatus: 'bought'}, {new: true})
+        const updatedCart = await Cart.findByIdAndUpdate(id, {cartStatus: 'bought', boughtAt: Date.now()} , {new: true})
         res.status(200).json({message: 'Cart sold correctly', updatedCart})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

@@ -7,11 +7,11 @@ decodeToken
 
 router.post('/', decodeToken, createCartValidations , createCart)
 router.get('/', decodeToken, getCart)
-router.get('/allCarts', getAllCarts)
-router.patch('/:id', deleteCart)
-router.patch('/buy/:id', buyCart)
-router.patch('/cancel/:id', cancelOrder)
-router.patch('/preparing/:id', preparingOrder)
-router.patch('/delivered/:id', delivered)
+router.get('/allCarts', decodeToken, getAllCarts)
+router.patch('/:id', decodeToken, deleteCart)
+router.put('/buy/:id', decodeToken, buyCart)
+router.patch('/cancel/:id', decodeToken, cancelOrder)
+router.patch('/preparing/:id', decodeToken, preparingOrder)
+router.patch('/delivered/:id', decodeToken, delivered)
 
 module.exports= router

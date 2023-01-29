@@ -9,6 +9,14 @@ const CartSchema = new Schema ({
         type: String,
         default: 'active'
     },
+    boughtAt: 
+        {
+            type: Date,
+        },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
     products: [
         {
             idProduct: {
@@ -47,7 +55,7 @@ const CartSchema = new Schema ({
                 },
             _id: false
         }
-    ]
+    ],
 },{
     versionKey: false
 }
