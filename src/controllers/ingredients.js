@@ -1,7 +1,6 @@
 const { findOneAndUpdate, findByIdAndUpdate } = require('./../models/Ingredient');
 const Ingredient = require('./../models/Ingredient')
 
-
 const addIngredient = async(req, res) => {
     try {
         const newIngredient =  new Ingredient(req.body)
