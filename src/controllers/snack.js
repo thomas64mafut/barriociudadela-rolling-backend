@@ -12,7 +12,7 @@ const addSnack = async (req, res) => {
 
 const getSnacks = async (req,res) => {
     try {
-        const Snacks = await Snack.find();
+        const Snacks = await Snack.find({ isDeleted: false });
         res.status(200).json({message: 'Snacks obtained correctly', Snacks})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

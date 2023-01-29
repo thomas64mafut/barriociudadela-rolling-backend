@@ -12,7 +12,7 @@ const addDrink = async (req, res) => {
 
 const getDrinks = async (req,res) => {
     try {
-        const Drinks = await Drink.find();
+        const Drinks = await Drink.find({ isDeleted: false });
         res.status(200).json({message: 'Drinks obtained correctly', Drinks})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

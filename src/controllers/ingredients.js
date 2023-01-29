@@ -13,7 +13,7 @@ const addIngredient = async(req, res) => {
 
 const getIngredients = async(req,res) => {
     try {
-        const ingredients = await Ingredient.find();
+        const ingredients = await Ingredient.find({ isDeleted: false });
         res.status(200).json({message: 'products obtained correctly', ingredients})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})

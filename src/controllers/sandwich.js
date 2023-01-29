@@ -12,8 +12,8 @@ const addSandwich = async (req, res) => {
 
 const getSandwiches = async (req,res) => {
     try {
-        const Sandwichs = await sSndwich.find().populate('ingredients');
-        res.status(200).json({message: 'Sandwichs obtained correctly', Sandwichs})
+        const products = await Sandwich.find({ isDeleted: false }).populate('ingredients');
+        res.status(200).json({message: 'Sandwichs obtained correctly', products})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
     }
