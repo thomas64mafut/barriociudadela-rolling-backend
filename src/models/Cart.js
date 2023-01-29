@@ -2,11 +2,20 @@ const { Schema, default: mongoose, model } = require("mongoose");
 
 const CartSchema = new Schema ({
     owner: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     cartStatus: {
         type: String,
         default: 'active'
+    },
+    boughtAt: 
+        {
+            type: Date,
+        },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
     },
     products: [
         {
@@ -46,7 +55,7 @@ const CartSchema = new Schema ({
                 },
             _id: false
         }
-    ]
+    ],
 },{
     versionKey: false
 }
