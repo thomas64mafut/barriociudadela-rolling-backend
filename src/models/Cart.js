@@ -23,6 +23,10 @@ const CartSchema = new Schema ({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Burger'
                 },
+            category: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Category'
+            },
             name: {
                 type: String
                 },
