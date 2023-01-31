@@ -20,31 +20,18 @@ const getIngredients = async(req,res) => {
     }
 }
 
-const editIngredient = async(req,res) => {
+const deleteIngredient =  async (req,res) => {
     try {
-        const {id} = req.params;
-        const updatedIngredient = await Ingredient.findByIdAndUpdate(id, req.body, {new : true})
-        res.status(200).json({message: 'properly edited Ingredient', updatedIngredient})
-    } catch (error) {
-        res.status(error.code || 500).json({message : error.message})
-        
-    }
-}
-
-const deleteIngredient =  async(req,res) => {
-    try {
-        const {id} = req.query;
-        await Ingredient.deleteOne({_id : id});
+        const { id } = req.params;
+        const deletedIngredient = await Ingredient.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
         res.status(200).json({message: 'Ingredient deleted correctly'})
     } catch (error) {
         res.status(error.code || 500).json({message : error.message})
     }
 }
 
-
 module.exports= {
     addIngredient,
     getIngredients,
-    editIngredient,
     deleteIngredient
 }
