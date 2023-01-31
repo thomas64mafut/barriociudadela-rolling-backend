@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        const userFound = await User.findById(req.userId);
+        const userFound = await User.findById(req.userId).select('-_id -password');
         if (!userFound) return res.status(400).json({ message: 'usuario no encontrado' });
         res.status(200).json({ message: 'datos de usuario localizados con exito', userFound });
     } catch (error) {
