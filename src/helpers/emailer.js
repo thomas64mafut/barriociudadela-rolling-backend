@@ -21,11 +21,11 @@ const sendMail = async (user) => {
         from:'tommysaurio007@gmail.com',
         to:`${user.email}`,
         subject: `Hello ${user.username} Welcome to Mi Barrio Ciudadela's community`,
-        html: '<h1>Hi there your registration has been succesfully received.</h1><br/><h5>We have sent you a copy of our menu, hope we see you soon to taste our burgers!<h5/>',
+        html: '<h1>Hi there your registration has been succesfully received.</h1><br/><h5>We have sent you a copy of our menu, hope we see you soon to taste our burgers!<h5/><br/><a href>',
         attachments: [
             {   
-                filename: 'license.txt',
-                path: 'https://raw.github.com/nodemailer/nodemailer/master/LICENSE'
+                filename: 'carta.pdf',
+                path: 'https://github.com/thomas64mafut/g2-frontend/raw/main/src/assets/Carta%20Barrio.pdf'
             },
         ]
     })
