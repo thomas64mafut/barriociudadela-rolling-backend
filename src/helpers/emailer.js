@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require('dotenv').config();
 
 const createTransport = () => {
     const transport = nodemailer.createTransport({
@@ -7,7 +8,7 @@ const createTransport = () => {
         secure:true,
         auth:{
             user:'tommysaurio007@gmail.com',
-            pass:'ndjtyqomnydgusyj',
+            pass:process.env.GMAIL_PASS,
         }
     });
 
@@ -28,7 +29,6 @@ const sendMail = async (user) => {
             },
         ]
     })
-    console.log("Message sent: %$", info.messageId);
 
     return
 }
