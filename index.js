@@ -6,10 +6,7 @@ const cors = require('cors');
 
 app.use(express.json({ extended: true, limit: '50mb' }));
 app.use(express.urlencoded());
-app.use(cors({
-  origin: 'https://finalproyect-g2.netlify.app/',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}));
+app.use(cors());
 
 app.use('/api', require('./src/routes'));
 
