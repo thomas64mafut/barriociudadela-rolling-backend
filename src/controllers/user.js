@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const emailer = require('../helpers/emailer');
 require('dotenv').config();
 
 const registerUser = async (req, res) => {
@@ -13,6 +14,7 @@ const registerUser = async (req, res) => {
         }
         const newUser = new User(userToRegister);
         await newUser.save();
+        emailer.sendMail(newUser);
         res.status(200).json({ message: 'User successfully created.' })
     } catch (error) {
         res.status(error.code || 500).json({ message: error.message })
