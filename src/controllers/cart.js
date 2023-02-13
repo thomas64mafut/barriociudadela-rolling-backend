@@ -3,7 +3,7 @@ const Cart = require("../models/Cart");
 
 const createCart = async(req,res) => {
     try {
-        const {name, quantity, price, removed, toppings, size} = req.body
+        const {name, quantity, price, removed, toppings, size, isVegan} = req.body
         const cartFound = await Cart.findOne({ owner: req.userId, cartStatus : 'active' })
         if(!cartFound){
             const payload = {
@@ -16,17 +16,18 @@ const createCart = async(req,res) => {
             await cart.save();
             return res.status(200).json({message: 'Product was added to the cart successfully', payload});
         }
-        const productFoundCart = cartFound.products?.find((cartItem)=> (cartItem.name === name) && (removed.toString() === cartItem.removed.toString()) && (toppings.toString() === cartItem.toppings.toString()) && (size === cartItem.size))
+        const productFoundCart = cartFound.products?.find((cartItem)=> (cartItem.name === name) && (removed.toString() === cartItem.removed.toString()) && (toppings.toString() === cartItem.toppings.toString()) && (size === cartItem.size) && (isVegan === cartItem.isVegan))
         if(productFoundCart) {
             const newProductsList = cartFound.products?.map((cartItem)=>{  
-                if ((cartItem.name === name) && (removed?.toString() === cartItem?.removed?.toString()) && (toppings?.toString() === cartItem.toppings?.toString()) && (size === cartItem.size)) {
+                if ((cartItem.name === name) && (removed?.toString() === cartItem?.removed?.toString()) && (toppings?.toString() === cartItem.toppings?.toString()) && (size === cartItem.size) && (isVegan === cartItem.isVegan)) {
                 return {
                     name,
                     quantity: quantity + cartItem.quantity,
                     price,
                     removed,
                     toppings,
-                    size
+                    size,
+                    isVegan
                 }           
                 }    
                 return cartItem
