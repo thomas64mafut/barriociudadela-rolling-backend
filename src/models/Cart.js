@@ -52,6 +52,10 @@ const CartSchema = new Schema ({
                     ref: 'Ingredient'
                 }
                 ],
+            isVegan: {
+                type: Boolean,
+                default: false,
+            },
             size:
                 {
                     type: String,

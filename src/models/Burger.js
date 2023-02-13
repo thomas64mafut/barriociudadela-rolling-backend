@@ -9,10 +9,6 @@ const BurgerSchema = extendSchema(ProductSchema, {
             ref: 'Ingredient'
         },
     ],
-    isVegan: {
-        type: Boolean,
-        default: false,
-    },
 },{
     versionKey: false
 })
