@@ -6,9 +6,7 @@ const cors = require('cors');
 
 app.use(express.json({ extended: true, limit: '50mb' }));
 app.use(express.urlencoded());
-app.use(cors({
-  origin: 'https://barrio-ciudadela.onrender.com',
-}));
+app.use(cors());
 
 app.use('/api', require('./src/routes'));
 
